@@ -1,6 +1,6 @@
-require('../css/app.scss');
+import '../css/app.scss';
 
-require('babel-core/polyfill');
+import 'babel-core/polyfill';
 
 document.addEventListener('DOMContentLoaded', () => {
   let greeting = document.createElement('span');
