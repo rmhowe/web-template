@@ -3,6 +3,8 @@ var webpack = require('webpack');
 module.exports = {
   entry: "./src/js/entry.js",
 
+  devtool: "cheap-module-source-map",
+
   output: {
     path: "./dist/js/",
     publicPath: "/dist/js/",
@@ -19,6 +21,13 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({minimize: true})
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ]
 };
