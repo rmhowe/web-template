@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: "./src/js/entry.js",
+  entry: "./src/js/index.js",
 
   devtool: "cheap-module-source-map",
 
@@ -14,8 +14,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /(node_modules|vendor)/ },
-      { test: /\.scss$/, loader: 'style!css!sass', exclude: /src\/fonts/ },
-      { test: /\.css$/, loader: "style!css", exclude: /src\/fonts/ },
+      { test: /\.css$/, loader: "style!css!postcss", exclude: /src\/fonts/ },
       { test: /\.(png|woff|woff2|eot|ttf|svg)/, loader: 'url-loader?limit=10000' }
     ]
   },
@@ -29,5 +28,17 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     })
-  ]
+  ],
+
+  postcss: function(webpack) {
+    return [
+      require('postcss-import')({
+        addDependencyTo: webpack
+      }),
+      require('autoprefixer'),
+      require('cssnext'),
+      require('precss'),
+      require('postcss-color-function')
+    ];
+  }
 };
